@@ -115,6 +115,18 @@ app.patch("/:productId", (req, res, next) => {
         })
 })
 
+app.delete('/', (req, res) => {
+    Product.findOneAndDelete({ name: req.body.name, price: req.body.price })
+        .then(result => {
+            console.log('Post successfully removed from collection!');
+            res.status(200).json(result)
+        })
+        .catch(err => {
+            console.error(err)
+            res.status(500).json({ error: err })
+        })
+})
+
 app.delete('/:productId', (req, res) => {
     const id = req.params.productId
     Product.findOneAndDelete({ _id: id })
